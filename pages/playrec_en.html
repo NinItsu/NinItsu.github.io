@@ -1,45 +1,48 @@
 <html>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117491242-1"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HDS3W3TLCY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-117491242-1');
+  gtag('config', 'G-HDS3W3TLCY');
 </script>
 <body bgcolor="#eafff0">
 <br>
 <h2>
-<font face="Courier New"><b>playrecインストールメモ(English Version Preparing)</b></font>
+<font face="Courier New"><b>Playrec Installation Notes (<a href=../playrec_jp.html target="_top">日本語バージョン</a>)</b></font>
 </h2>
 <hr>
 <font face="Courier New">
-<h3>概要</h3>
-MATLAB用のマルチチャンネルオーディオ信号の同時入出力ライブラリ<a href=https://www.playrec.co.uk/index.html>playrec</a>の最新インストール方法についてご紹介します。<br>
-#2025年07月16日時点情報<br>
-#テスト環境: Windows 11, Intel 64-bit, MATLAB 2023a, Visual Studio 2019<br>
-#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;macOS 15.5, AppleSilicon 64-bit, MATLAB 2024a, Xcode 15<br>
+<h3>Overview</h3>
+This page introduces the latest installation method for <a href=https://www.playrec.co.uk/index.html>playrec</a>, a multi-channel audio input/output library for MATLAB.<br>
+#As of July 16, 2025<br>
+#Test environment: Windows 11, Intel 64-bit, MATLAB 2023a, Visual Studio 2019<br>
+#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;macOS 15.5, AppleSilicon 64-bit, MATLAB 2024a, Xcode 15<br>
+#This page is translated by chatGPT.<br>
 
-<h3>背景</h3>
-playrecは2015前後に開発を停止し，それ以来win64への対応問題や，最近ではPortAudio/Windows SDK/macOSの仕様にアップデートできていないため，<br>
-公式情報のみでインストールができなく，さらにネット情報を手掛かりにインストールすることも大変時間と手間がかかるので，本サイトで情報をまとめました。<br>
-なお，現在MATLABのAudioToolboxはplayrecとほぼ同様な機能(audioPlayerRecorder)をサポートしていますので，<br>
-アカデミア版や個人版MATLABユーザでしたら代わりにAudioToolboxの使用をおすすめします。<br>
-一方で企業用ライセンスに関してはAudioToolboxが高価なので，筆者と同様に困っている方に一助になれば幸いです。
+<h3>Background</h3>
+Playrec development was discontinued around 2015, and since then, it has not been updated to support Win64 or recent changes in PortAudio/Windows SDK/macOS specifications.<br>
+As a result, it is no longer possible to install it using only the official information, and even using online resources as a guide, installation is extremely difficult and time-consuming. Therefore, I have compiled the relevant information on this site.<br>
+Currently, MATLAB's Audio Toolbox supports functions nearly equivalent to those of Playrec (via audioPlayerRecorder),
+so if you are an academic or individual MATLAB user, I recommend using Audio Toolbox instead.<br>
+However, since Audio Toolbox can be expensive for commercial licenses, we hope this site will be of help to those facing similar difficulties, as the author has.<br>
 
-<h3>インストール手順(OS共通)</h3>
-まず，playrec公式の<a href=https://www.playrec.co.uk/compiling.html>最新情報</a>を参考に準備します。<br>
-最新版ファイルは<a href=https://github.com/PlayrecForMatlab/playrec>GitHub</a>からダウンロードできます<br>
-またOSと関わらず最新版<a href="https://files.portaudio.com/download.html">PortAudio</a>(v19.7.0 stable release)のダウンロードが必要となります。<br>
+<h3>Installation Procedure (Common to All OS)</h3>
+First, prepare by referring to the <a href=https://www.playrec.co.uk/compiling.html>latest official information</a> on Playrec.<br>
+The latest files can be downloaded from <a href=https://github.com/PlayrecForMatlab/playrec>GitHub</a>.<br>
+Regardless of your OS, you will also need to download the latest version of <a href="https://files.portaudio.com/download.html">PortAudio</a> (v19.7.0 stable release).<br>
 <br>
-それからplayrecの.mスクリプトに少し修正を加える必要があります。<br>
-64-bit Windowsへの対応は羽田陽一先生の<a href=http://www.hanedalab.inf.uec.ac.jp/playrec_use.html>サイト</a>，PortAudio仕様変更への対応はGitHub上alastairhmooreさんの<a href=https://github.com/PlayrecForMatlab/playrec/pull/12/commits/f398b6b36b2f7e8afa831cf0b4e652589a385c3b>スレッド</a>を参考に<br>
+Next, you will need to make some minor modifications to the '.m' scripts of Playrec.<br>
+For 64-bit Windows support, refer to Professor Yoichi Haneda’s <a href=http://www.hanedalab.inf.uec.ac.jp/playrec_use.html>website</a>, 
+and for adapting to changes in the PortAudio specifications, refer to the <a href=https://github.com/PlayrecForMatlab/playrec/pull/12/commits/f398b6b36b2f7e8afa831cf0b4e652589a385c3b>thread</a> by <i>alastairhmoore</i> on GitHub.<br>
 <br>
+
 <b>playrec-master/m_files/compile_playrec_func.m</b><br>
 <pre>
-    line 42-56: 'src/os/mac_osx'を削除<br>
-    修正前
+    line 42-56: remove 'src/os/mac_osx'<br>
+    <i>Original</i>
     <code>
         pa_include_dirs = {'src/common',...
                    'src/hostapi/alsa',...
@@ -57,7 +60,7 @@ playrecは2015前後に開発を停止し，それ以来win64への対応問題�
                    'src/os/win',...
                    'include'};      %just include all possibilities!
     </code>
-    修正後
+    <i>Modified</i>
     <code>
         pa_include_dirs = {'src/common',...
                    'src/hostapi/alsa',...
@@ -74,21 +77,21 @@ playrecは2015前後に開発を停止し，それ以来win64への対応問題�
                    'src/os/win',...
                    'include'};      %just include all possibilities!
     </code>
-    line 78-80: 'src/os/mac_osx/pa_mac_hostapis.c'を'src/os/unix/pa_unix_hostapis.c'へ変更<br>
-    修正前
+    line 78-80: revise 'src/os/mac_osx/pa_mac_hostapis.c' to 'src/os/unix/pa_unix_hostapis.c'<br>
+    <i>Original</i>
     <code>
         pa_os_specific_files = [pa_os_specific_files, ...
                                 <u>{'src/os/mac_osx/pa_mac_hostapis.c', ...</u>
                                 'src/os/unix/pa_unix_util.c'}];
     </code>
-    修正後
+    <i>Modified</i>
     <code>
         pa_os_specific_files = [pa_os_specific_files, ...
                                 {'src/os/unix_osx/pa_unix_hostapis.c', ...
                                 'src/os/unix/pa_unix_util.c'}];
     </code>
-    (optional, mac版ASIO未テストのため) line 84-93: macOS ASIO用修正<br>
-    修正前
+    (Optional, as ASIO for macOS has not been tested) line 84-93: modifications for ASIO support on macOS<br>
+    <i>Original</i>
     <code>
         api_include_dirs = [api_include_dirs, ...
                             resolve_paths(asio_path,...
@@ -101,7 +104,7 @@ playrecは2015前後に開発を停止し，それ以来win64への対応問題�
                           <u>'host/mac/asioshlib.cpp',...</u>
                           <u>'host/mac/codefragements.cpp'})];</u>
     </code>
-    修正後
+    <i>Modified</i>
     <code>
         api_include_dirs = [api_include_dirs, ...
                             resolve_paths(asio_path,...
@@ -111,22 +114,22 @@ playrecは2015前後に開発を停止し，それ以来win64への対応問題�
                      resolve_paths(asio_path,...
                          {'host/asiodrivers.cpp'})];</u>
     </code>
-    line 104: macOS CoreAudio用修正<br>
-    修正前
+    line 104: modifications for CoreAudio support on macOS<br>
+    <i>Original</i>
     <code>
         <u>compiler_flags = [compiler_flags, {'PA_USE_COREAUDIO'}];</u>
     </code>
-    修正後
+    <i>Modified</i>
     <code>
         compiler_flags = [compiler_flags, {'PA_USE_COREAUDIO=1',...
                                            '__MACOSX_CORE__'}];
     </code>
-    line 114: WIN64用修正<br>
-    修正前
+    line 114: modifications for WIN64<br>
+    <i>Original</i>
     <code>
         <u>compiler_flags = [compiler_flags, {'WIN32'}];</u>
     </code>
-    修正後
+    <i>Modified</i>
     <code>
         if strcmp(computer, 'PCWIN64')
             compiler_flags = [compiler_flags, {'WIN64'}];
@@ -137,12 +140,12 @@ playrecは2015前後に開発を停止し，それ以来win64への対応問題�
 </pre>
 <b>playrec-master/m_files/build_mex.m</b><br>
 <pre>
-    line 94: WIN64用修正<br>
-    修正前
+    line 94: modifications for WIN64<br>
+    <i>Original</i>
     <code>
         <u>build_args = {build_args{:}, ['LIB#', cell2mat(lib_dirs(n)), ';$LIB']};</u>
     </code>
-    修正後
+    <i>Modified</i>
     <code>
         if strcmp(computer, 'PCWIN64')
             build_args = {build_args{:}, ['-L', cell2mat(lib_dirs(n))]};
@@ -151,39 +154,39 @@ playrecは2015前後に開発を停止し，それ以来win64への対応問題�
         end
     </code>
 </pre>
-羽田先生のサイトに記述されている他の修正点について，GitHub最新版ではアップデートされているので修正は不要です。<br>
+The other modifications described on Professor Haneda’s website have already been updated in the latest version on GitHub, so no further changes are necessary.<br>
 
-<h3>インストール手順(Windows)</h3>
-Windowsの場合，C++コンパイラ(筆者はVisual Studio 2019)，<a href=https://developer.microsoft.com/ja-jp/windows/downloads/windows-sdk>Windows SDK</a>(筆者は10.0.26100.0)をダウンロードする必要があります。<br>
-また，ASIOを使用する場合は，<a href=https://www.steinberg.net/developers>ASIO SDK</a>をあらかじめ用意してください。<br>
-DirectSoundサポートは以前されていましたが，筆者は現在のSDKでインストールできませんでした。<br>
+<h3>Installation Procedure (Windows)</h3>
+For Windows, you will need to download a C++ compiler (the author used Visual Studio 2019) and the <a href=https://developer.microsoft.com/ja-jp/windows/downloads/windows-sdk>Windows SDK</a> (the author used version 10.0.26100.0).<br>
+If you plan to use ASIO, please prepare the <a href=https://www.steinberg.net/developers>ASIO SDK</a> in advance.<br>
+DirectSound was supported in the past, but the author was unable to install it with the current SDK.<br>
 <br>
-playrec-master/compile_playrec.mを実行し，指示通りに進めばインストールはできるはず。<br>
-#前述の通り，DirectSoundのチェックボックスを外してください。<br>
-#PortAudioとASIOのフォルダをplayrec-master/libに入れると実行時自動にパスを探してくれます。<br>
-#Platform SDK DirectoryはC:\Program Files (x86)\Windows Kits\10となります。<br>
-#フォルダにplayrec.mexw64が生成されたら多分インストールはできています。
+Run 'playrec-master/compile_playrec.m' and follow the instructions — installation should be possible.<br>
+#As mentioned earlier, please uncheck the DirectSound option.<br>
+#If you place the PortAudio and ASIO folders into 'playrec-master/lib', the script will automatically detect their paths during execution.<br>
+#The Platform SDK Directory should be 'C:\Program Files (x86)\Windows Kits\10'.<br>
+#If 'playrec.mexw64' is generated in the folder, the installation is most likely successful.<br>
 
-<h3>インストール手順(macOS)</h3>
-macOSの場合，インストールはかなり大変で，筆者は何度も心が折れましたが，CoreAudioのみでしたら下記の通りをやればできると思います。<br>
+<h3>Installation Procedure (macOS)</h3>
+Installation on macOS is quite challenging — the author felt discouraged many times — but if you are using only CoreAudio, it should be possible by following the steps below.<br>
 <br>
-Windowsと同様にplayrec-master/compile_playrec.mを実行し，指示通りに進めます。<br>
-#ASIOのチェックをいれるとC++のコンパイラ(Xcode Clang++)が使用されて，portaudioのコンパイルが通らなくなるので外してください。<br>
-#Jack Audio Connection Kitも，途中でファイルが見つからないというエラーが出るので外してください。<br>
-#DebugとVerboseは必ずチェックを入れてください。<br>
+As same as for Windows, run 'playrec-master/compile_playrec.m' and follow the on-screen instructions.<br>
+#Uncheck the ASIO option, as enabling it will cause the script to use the C++ compiler (Xcode Clang++), which will fail to compile PortAudio.<br>
+#Also uncheck Jack Audio Connection Kit, as it will result in a file-not-found error during the process.<br>
+#Be sure to check both the Debug and Verbose options.<br>
 <br>
-途中でエラーが発生し，コンパイルが終了されますが，フォルダに.oファイル(mex_dll_core.oなど)が10個ほど生成されているであれば次に進みます。<br>
-このタイミングでコマンドウィンドウのログを遡ります。エラーコード直前の一行とさらに一行前のコマンドをコピーします。<br>
-環境によって内容が異なる場合もあると思いますが，下記のようなログが出ていると思います。（[USERNAME]はログインしているユーザ名となります）<br>
+During the process, an error will occur and compilation will stop, but if around ten '.o' files (e.g., 'mex_dll_core.o') have been generated in the folder, proceed to the next step.<br>
+At this point, scroll back through the command window log. Copy the two lines right before the error message.<br>
+The exact content may vary depending on your environment, but you will likely see something like the following in the log. ([USERNAME] represents your login username.)<br>
 <pre>
-    コマンドA
+    Command A
     <code>
         /Applications/MATLAB_R2024a.app/bin/maca64/usResourceCompiler3 --manifest-add 
         /private/var/folders/4t/wrqf688j0tldphxlqcl8nggc0000gn/T/mex_20302766153414_11620//mw_mex_tempmex_manifest.json 
         --bundle-name mexVersioning --out-file 
         /private/var/folders/4t/wrqf688j0tldphxlqcl8nggc0000gn/T/mex_20302766153414_11620//mw_mex_tempmex_bundle.zip
     </code>
-    コマンドB
+    Command B
     <code>
         /usr/bin/xcrun -sdk macosx15.5 clang -Wl,-twolevel_namespace  -arch arm64 -mmacosx-version-min=11.0 -Wl,
         -syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk 
@@ -196,15 +199,15 @@ Windowsと同様にplayrec-master/compile_playrec.mを実行し，指示通り�
         -sectcreate,__TEXT,us_resources,/private/var/folders/4t/wrqf688j0tldphxlqcl8nggc0000gn/T/mex_20282859537241_11620//mw_mex_tempmex_bundle.zip 
     </code>
 </pre>
-これらをテキスト編集ソフトにペーストし，編集します。<br>
+Paste these commands into a text editor for editing.<br>
 <br>
-まず，コマンドB（実際1行しかありませんが）3行目にあるmex_dll_core.oの直前に下記の内容を追加します。<br>
+First, in Command B, add the following content just before 'mex_dll_core.o' on line 3 (there is only one line in the command window through).<br>
 <pre>
     <code>
         -framework CoreAudio -framework AudioToolbox -framework AudioUnit -framework CoreFoundation -framework CoreServices
     </code>
 </pre>
-次に，コマンドAの2行目,4行目とコマンドB最後にある/private/var/...というパスを適当なアクセスできるフォルダに書き換えます。例えば:<br>
+Next, modify the '/private/var/...'' path found on line 2 and line 4 of Command A, as well as at the end of Command B, to a suitable folder that you have access to. For example: <br>
 <pre>
     <code>
         /Users/[USERNAME]/Downloads/mw_mex_tempmex_manifest.json 
@@ -213,17 +216,17 @@ Windowsと同様にplayrec-master/compile_playrec.mを実行し，指示通り�
         /Users/[USERNAME]/Downloads/mw_mex_tempmex_bundle.zip 
     </code>
 </pre>
-#この.zipファイルは一時的に生成されます。インストール完了後は手動で削除してください。<br>
-編集後のコマンドはこんな形になります。<br>
+#This '.zip' file will be temporarily generated. Please delete it manually after the installation is complete.<br>
+After editing, the commands should look like this:<br>
 <pre>
-    コマンドA
+    Command A
     <code>
         /Applications/MATLAB_R2024a.app/bin/maca64/usResourceCompiler3 --manifest-add 
         /Users/[USERNAME]/Downloads/mw_mex_tempmex_manifest.json  
         --bundle-name mexVersioning --out-file 
         /Users/[USERNAME]/Downloads/mw_mex_tempmex_bundle.zip 
     </code>
-    コマンドB
+    Command B
     <code>
         /usr/bin/xcrun -sdk macosx15.5 clang -Wl,-twolevel_namespace  -arch arm64 -mmacosx-version-min=11.0 -Wl,
         -syslibroot,/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.5.sdk 
@@ -237,17 +240,17 @@ Windowsと同様にplayrec-master/compile_playrec.mを実行し，指示通り�
         -sectcreate,__TEXT,us_resources,/Users/[USERNAME]/Downloads/mw_mex_tempmex_bundle.zip
     </code>
 </pre>
-ターミナルを開きます。.oファイルが生成されたフォルダに移動します。<br>
+Open terminal in mac, and navigate to the folder where the '.o' files were generated.<br>
 <pre>
     <code>
         cd /Users/[USERNAME]/Documents/MATLAB/playrec-master
     </code>
 </pre>
-編集後のコマンドAをターミナルで実行します。エラーが出るが無視します。<br>
-この段階で上述のmw_mex_tempemx_bundle.zipは生成されているはずです。<br>
-コマンドBをターミナルで実行します。<br>
-終了後，.oファイルのフォルダにplayrec.mexmaca64が出来上がったらインストールは完了となります。<br>
-#.oファイルは終了後削除しても問題ないです。<br>
+Run the edited Command A in the terminal. An error will appear, just ignore it.<br>
+At this point, the 'mw_mex_tempemx_bundle.zip' file should have been generated.<br>
+Then, run Command B in the terminal.<br>
+Once completed, if 'playrec.mexmaca64' has been created in the folder containing the '.o' files, the installation is complete.<br>
+#You can safely delete the '.o' files after the process is finished.<br>
 </font>
 </body>
 </html>
